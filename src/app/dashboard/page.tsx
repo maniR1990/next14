@@ -1,3 +1,1 @@
-export default function DashboardHome() {
-  return <h2>Dashboard Home</h2>;
-}
+export default function DashboardPage() { return <p>Protected by JWT</p>; }
