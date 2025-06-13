@@ -1,5 +1,5 @@
 #!/bin/sh
-. \"/_/husky.sh\"
+
 echo \"? Pre-commit hook working!\"#!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
