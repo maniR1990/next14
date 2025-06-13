@@ -1,16 +1,28 @@
 #!/bin/sh
 
-echo \"? Pre-commit hook working!\"#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 branchName=$(git rev-parse --abbrev-ref HEAD)
-branchRegex="^(feat|fix|hotfix)-[0-9]+-[a-z0-9\\-]+$"
+branchRegex="^(feat|fix|hotfix)-[0-9]+-[a-z0-9\-]+$"
+commitMessage=$(git log -1 --pretty=%B | head -n1)
 
-if ! echo "$branchName" | grep -Eq "$branchRegex"; then
-  echo "❌ ERROR: Invalid branch name: \"$branchName\""
-  echo "✅ Expected format: feat-1234-something, fix-5678-bug-fix, hotfix-9999-urgent"
-  echo "🔓 To override: ALLOW_BRANCH_OVERRIDE=true git commit"
-  exit 1
+if [ "$ALLOW_BRANCH_OVERRIDE" != "true" ]; then
+  # Validate branch name
+  if ! echo "$branchName" | grep -Eq "$branchRegex"; then
+    echo "❌ ERROR: Invalid branch name \"$branchName\"" >&2
+    echo "✅ Expected: feat-1234-desc, fix-5678-bug, hotfix-9999-urgent" >&2
+    echo "🔓 To override: ALLOW_BRANCH_OVERRIDE=true git commit" >&2
+    exit 1
+  fi
+
+  # Validate commit message
+  if [ -z "$commitMessage" ]; then
+    echo "❌ ERROR: Commit message is empty." >&2
+    exit 1
+  fi
+
+  if [ ${#commitMessage} -lt 10 ]; then
+    echo "❌ ERROR: Commit message too short. Must be at least 10 characters." >&2
+    exit 1
+  fi
 fi
 
-echo "✅ Branch name \"$branchName\" matches expected convention."
+echo "✅ Pre-commit checks passed!" >&2
