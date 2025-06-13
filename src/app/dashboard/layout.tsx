@@ -1,9 +1,16 @@
-import { cookies } from 'next/headers';
+// 📁 SERVER: src/app/dashboard/layout.tsx
 import { redirect } from 'next/navigation';
-import { verifyToken } from '../../lib/auth';
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const token = cookies().get('auth_token')?.value;
-  console.log('token valeu', token)
-  if (!token || !verifyToken(token)) redirect('/login');
-  return <div><h3>Dashboard (JWT)</h3>{children}</div>;
+import { validateUserFromCookies } from '@/lib/validateUser';
+
+import { ReactNode } from 'react';
+
+interface LayoutProps {
+  children: ReactNode;    // ← tell TS what “children” is
+}
+
+export default function DashboardLayout({ children }:LayoutProps) {
+  const user = validateUserFromCookies();
+  if (!user) redirect('/login');
+
+  return <>{children}</>;
 }
