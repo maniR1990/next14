@@ -1,0 +1,10 @@
+{
+  "excludes": [
+    "node_modules",
+    ".git",
+    "dist"
+  ],
+  "depth": 3,
+  "showFiles": true,
+  "showIcons": false
+}

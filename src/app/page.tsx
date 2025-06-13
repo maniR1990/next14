@@ -1,3 +1,4 @@
+// 📁 CLIENT: src/app/page.tsx
 export default function HomePage() {
-  return <h2>Home Page</h2>;
+  return <h1>Home Page (Public)</h1>;
 }

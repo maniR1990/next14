@@ -1,0 +1,21 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+branchName=$(git rev-parse --abbrev-ref HEAD)
+
+# Enforce branch name format: feat-<taskid>-desc, fix-<taskid>-desc, hotfix-<taskid>-desc
+branchRegex="^(feat|fix|hotfix)-[0-9]+-[a-z0-9\\-]+$"
+
+# Allow override via env var
+if [ "$ALLOW_BRANCH_OVERRIDE" = "true" ]; then
+  echo "⚠️  Override enabled (ALLOW_BRANCH_OVERRIDE=true). Skipping branch name check."
+  exit 0
+fi
+
+if ! echo "$branchName" | grep -Eq "$branchRegex"; then
+  echo "❌ ERROR: Branch name \"$branchName\" is invalid."
+  echo "✅ Expected format: feat-1234-desc, fix-5678-bug-fix, or hotfix-9999-crash-patch"
+  echo "🔓 To override in emergency:"
+  echo "    ALLOW_BRANCH_OVERRIDE=true git push"
+  exit 1
+fi
