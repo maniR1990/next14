@@ -1,3 +1,16 @@
 #!/bin/sh
 . \"/_/husky.sh\"
-echo \"? Pre-commit hook working!\"
+echo \"? Pre-commit hook working!\"#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+branchName=$(git rev-parse --abbrev-ref HEAD)
+branchRegex="^(feat|fix|hotfix)-[0-9]+-[a-z0-9\\-]+$"
+
+if ! echo "$branchName" | grep -Eq "$branchRegex"; then
+  echo "❌ ERROR: Invalid branch name: \"$branchName\""
+  echo "✅ Expected format: feat-1234-something, fix-5678-bug-fix, hotfix-9999-urgent"
+  echo "🔓 To override: ALLOW_BRANCH_OVERRIDE=true git commit"
+  exit 1
+fi
+
+echo "✅ Branch name \"$branchName\" matches expected convention."
