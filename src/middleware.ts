@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
 
   const isLoginPage = pathname === "/login";
 
-  // 🔐 Case 1: Guest trying to access protected page
+  // 🔐 Case 1: Guest trying to access protected page:
   if (!token && !isLoginPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
