@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.29",
     "react": "^18",

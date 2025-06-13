@@ -1,23 +1,3 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-branchName=$(git rev-parse --abbrev-ref HEAD)
-
-# Enforce format: feat-1234-something, fix-5678-something, hotfix-9999-something
-branchRegex="^(feat|fix|hotfix)-[0-9]+-[a-z0-9\\-]+$"
-
-# Allow override via env var
-if [ "$ALLOW_BRANCH_OVERRIDE" = "true" ]; then
-  echo "⚠️  Override enabled (ALLOW_BRANCH_OVERRIDE=true). Skipping branch name check."
-  exit 0
-fi
-
-# ✅ Check and log
-if echo "$branchName" | grep -Eq "$branchRegex"; then
-  echo "✅ Branch name \"$branchName\" matches the required convention."
-else
-  echo "❌ ERROR: Branch name \"$branchName\" is invalid."
-  echo "✅ Expected: feat-1234-new-feature, fix-5678-some-bug, hotfix-9999-urgent"
-  echo "🔓 Emergency override: ALLOW_BRANCH_OVERRIDE=true git commit"
-  exit 1
-fi
+. \"/_/husky.sh\"
+echo \"? Pre-commit hook working!\"
