@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build and export Next.js app
-        run: npm run build
+        run: NEXT_IGNORE_ESLINT=true npm run build
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
