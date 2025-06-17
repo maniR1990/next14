@@ -18,8 +18,11 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Clean previous build
+        run: rm -rf .next out
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build and export Next.js app
         run: NEXT_IGNORE_ESLINT=true npm run build
