@@ -1,4 +1,7 @@
 // 📁 CLIENT: src/app/page.tsx
 export default function HomePage() {
-  return <h1>Home Page private</h1>;
+  return <div>
+    <h1>AWS pipe line success</h1>
+    <span>testing in progress</span>
+  </div>;
 }
