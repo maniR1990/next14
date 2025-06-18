@@ -3,7 +3,7 @@ name: Deploy Next.js App to S3
 on:
   push:
     branches:
-      - main # change to 'master' if that's your branch
+      - main
 
 jobs:
   deploy:
@@ -25,12 +25,12 @@ jobs:
         run: npm ci
 
       - name: Build and export Next.js app
-        run: NEXT_IGNORE_ESLINT=true npm run build
+        run: NEXT_IGNORE_ESLINT=true npm run build && npx next export
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --delete
+          args: --delete
         env:
           AWS_S3_BUCKET: manir16
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
