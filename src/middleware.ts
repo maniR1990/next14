@@ -13,11 +13,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // 🙅‍♂️ Case 2: Logged-in user trying to access /login
-  if (token && isLoginPage) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
   // ✅ All other cases: allow
   return NextResponse.next();
 }
