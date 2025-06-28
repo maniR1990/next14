@@ -1,13 +1,10 @@
 export const GA_MEASUREMENT_ID = "G-QTG7KF18GL"; // Replace with your GA ID
 
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-  }
-}
+type GTagFunction = (...args: unknown[]) => void;
 
 export const pageview = (url: string) => {
-  (window as any).gtag("config", GA_MEASUREMENT_ID, {
+  const gtag = (window as Window & { gtag?: GTagFunction }).gtag;
+  gtag?.("config", GA_MEASUREMENT_ID, {
     page_path: url,
   });
 };
@@ -20,5 +17,6 @@ interface GAEventParams {
 }
 
 export const event = (action: string, params: GAEventParams) => {
-  (window as any).gtag("event", action, params);
+  const gtag = (window as Window & { gtag?: GTagFunction }).gtag;
+  gtag?.("event", action, params);
 };
