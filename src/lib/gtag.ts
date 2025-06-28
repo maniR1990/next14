@@ -1,7 +1,7 @@
 export const GA_MEASUREMENT_ID = "G-QTG7KF18GL"; // Replace with your GA ID
 
 export const pageview = (url: string) => {
-  window.gtag("config", GA_MEASUREMENT_ID, {
+  (window as any).gtag("config", GA_MEASUREMENT_ID, {
     page_path: url,
   });
 };
@@ -14,5 +14,5 @@ interface GAEventParams {
 }
 
 export const event = (action: string, params: GAEventParams) => {
-  window.gtag("event", action, params);
+  (window as any).gtag("event", action, params);
 };
